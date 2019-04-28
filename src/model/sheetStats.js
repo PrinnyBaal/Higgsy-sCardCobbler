@@ -40,8 +40,8 @@ let construct={
 let backgroundCatalogue=[
 
 {url:"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png",
-description:"Sooo....yeah...here you go.",
-tags:["sample"]
+description:"Artist: BernalesTomas",
+tags:["BackgroundCard"]
 }
 
 
