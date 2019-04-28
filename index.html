@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Higgsy's Card Cobbler</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="Styling/cardCobbler.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script src="src/ctrl/initialize.js"></script>
+  <script src="src/model/sheetStats.js"></script>
+  <script src="src/view/sheetLogic.js"></script>
+
+  <script>
+   window.addEventListener( "load", sheetProj.view.sheetLogic.setupUserInterface);
+  </script>
+</head>
+
+<style>
+</style>
+<body>
+  <div  class="container-fluid pt-2" id="shopBanner">
+    <div class="row  h-75" >
+      <div class="col-1 offset-1" id="bannerImage">
+
+      </div>
+      <div class="col my-auto" id="bannerTitle">
+        Higgsy's Card Cobbler
+      </div>
+    </div>
+    <div class="row h-25">
+      <div class="offset-4 col-3" >
+        <p id="bannerTagline">"No, we don't make shoes."</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container mt-4" id="workSpace">
+    <div class="row">
+      <div class="col" style="background-color:#222831; color:#d65a31; height:20px;">
+
+      </div>
+    </div>
+    <div class="row" style="height:600px;">
+      <div class="col-8" id="formWorkspace" style="">
+
+        <div class="formContainer">
+          <div class="formGroupTitle py-2">Card Images</div>
+          <div id="cardImageForms"></div>
+        </div>
+
+        <div class="formContainer">
+          <div class="formGroupTitle py-2">Card Text</div>
+          <div id="cardTextForms"></div>
+        </div>
+        <div class="formContainer">
+          <div class="formGroupTitle py-2">Add Image To Catalogue</div>
+          <div  class="catalogueAddForm">
+            <hr>
+            <table>
+              <tr>
+                <!-- <th>
+                  Add image to catalogue:
+                </th> -->
+              </tr>
+              <tr>
+                <td>Add art to which catalogue?:</td>
+                <td><input type="radio" name="catalogueType" value="background"> Card Art
+                  <input type="radio" name="catalogueType" value="item" checked="checked"> Item Art</td>
+              </tr>
+              <tr class="hidden">
+                <td>Upload by File or URL?:</td>
+                <td><input type="radio" name="uploadType" value="file"> File
+                  <input type="radio" name="uploadType" value="url" checked="checked"> URL</td>
+              </tr>
+              <tr class="hidden">
+                <td>Upload By File:</td>
+                <td><input id="catAddByFile" type="file" name="pic" accept="image/*"></td></tr>
+              <tr>
+                <td>URL of Image:</td>
+                <td><input id="catAddByURL" type="text" placeholder="Image URL goes here..."></td>
+              </tr>
+              <tr>
+                <td>Optionally Create Tags (seperated by commas):</td>
+                <td><textarea id="catAddTags" placeholder="Example, Sample, For Reference, Adjective, Artist Name, Etc."></textarea></td>
+              </tr>
+              <tr>
+                <td>Optionally Add Description:</td>
+
+              </tr>
+              <tr>
+                <td style="width:100%;"><textarea id="catAddDescription" placeholder="Description..."></textarea></td>
+              </tr>
+              <tr>
+                <td><button onclick="catalogue.addToCatalogue()">Submit To Catalogue</button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-4" id="cardContainer" style="position:relative;">
+        <canvas width="350" height="516"  style="position:absolute; top:15px;left: 0;
+right: 0;
+margin: auto;" id="cardCanvas">
+        </canvas>
+        <button style="position:absolute; bottom:0; left:0;" onclick="canvasLogic.displayItemCard()" id="craftCardButton" class="">
+          Load Card
+        </button>
+
+        <button style="position:absolute; bottom:0; right:0;" onclick="canvasLogic.displayItemCard(true)" id="gridLayerButton" class="hidden">
+          25x25 Grid View
+        </button>
+
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="background-color:#222831; color:#d65a31; height:20px;">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div  id="imgSelectContainer" class="col hidden mt-4">
+        <div id="catalogueName">Name</div>
+        <div class="px-3" id="catalogueTags" style="">
+
+        </div>
+
+        <div id="catalogueGrid" class="container-fluid" >
+
+        </div>
+
+        <div class="px-4 py-2" id="catalogueDescription" style="">description</div>
+      </div>
+    </div>
+  </div>
+  <div id="mainBody" class="container-fluid mt-2">
+    <div style="height:500px; " class="row">
+
+
+    </div>
+
+
+    <!-- <div class="row catalogueAddition">
+      <div class="col-4 offset-2" class="formStyle">
+        <hr>
+        <table>
+          <tr>
+            <th>
+              Add image to catalogue:
+            </th>
+          </tr>
+          <tr>
+            <td>Catalogue:</td>
+            <td><input type="radio" name="catalogueType" value="background"> Card Art
+              <input type="radio" name="catalogueType" value="item" checked="checked"> Item Art</td>
+          </tr>
+          <tr>
+            <td>Upload by File or URL?:</td>
+            <td><input type="radio" name="uploadType" value="file"> File
+              <input type="radio" name="uploadType" value="url" checked="checked"> URL</td>
+          </tr>
+          <tr>
+            <td>Upload By File:</td>
+            <td><input id="catAddByFile" type="file" name="pic" accept="image/*"></td></tr>
+          <tr>
+            <td>Upload By URL:</td>
+            <td><input id="catAddByURL" type="text" placeholder="Image URL goes here..."></td>
+          </tr>
+          <tr>
+            <td>Optionally Create Tags (seperated by commas):</td>
+            <td><textarea id="catAddTags" placeholder="Example, Sample, For Reference, Adjective, Artist Name, Etc."></textarea></td>
+          </tr>
+          <tr>
+            <td>Optionally Add Description:</td>
+
+          </tr>
+          <tr>
+            <td><textarea id="catAddDescription" placeholder="Description..."></textarea></td>
+          </tr>
+          <tr>
+            <td><button onclick="catalogue.addToCatalogue()">Submit</button></td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
+
+  </div>
+
+  <div id="footer" style="background-color:brown" class="container-fluid">
+
+      <div class="row h-100 pb-4">
+        <div class="col" >
+          <br>
+          <p><b>Steven Sonson</b></p>
+          <hr>
+          <p><emsp>ssonson@alumni.nd.edu</p>
+          <p><emsp>Bridgport, Connecticut</p>
+          <hr>
+          <p><b>Other Higgsy DnD Tools</b></p>  
+          <a href="https://prinnybaal.github.io/Higgsy-s-U-Craft/">Higgsy's U-Craft (Magic Item Cost Estimation)</a>
+          <a href="https://prinnybaal.github.io/Higgsy-sModularSheet/">Higgsy's Modular Character Sheet[Beta]</a>
+          <hr>
+          <button onclick="resetStorage()">Reset To Default</button>
+        </div>
+        <div class="col" >
+          <br>
+          <p><b>Credits</b></p>
+          <hr>
+          <p><emsp>Armor Art Courtesy of Domigorgon:<a href="https://www.deviantart.com/domigorgon/art/Armor-Collection-746626202">Deviant Art</a>/<a href="https://www.patreon.com/posts/19030952">Patreon</a></p>
+          <p><emsp>Site Mascot Higgsy, originally sprite by: <a href="https://lemmasoft.renai.us/forums/viewtopic.php?f=52&t=48688&p=501514&hilit=female#p501514">GrammaHobbes</a></p>
+          <p><emsp>Default Card Template: <a href="https://www.reddit.com/r/DnD/comments/7c9hge/oc_really_proud_of_my_item_cards_bonus_template/">u/Bernalestomas</a></p>
+          <p><emsp>Site Background: <a href="https://www.toptal.com/designers/subtlepatterns/ep-natural-black/">EP Natural Black from Toptal Subtle Patterns</a></p>
+          <a href="https://icons8.com/icon/80339/delete">Delete icon by Icons8</a>
+
+
+
+        </div>
+      </div>
+  </div>
+
+</body>

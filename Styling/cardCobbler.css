@@ -1,0 +1,219 @@
+#shopBanner {
+  height: 15vh;
+  background-color: #222831;
+}
+#shopBanner #bannerImage {
+  background-image: url("https://res.cloudinary.com/metaverse/image/upload/v1541010545/Avatars/Higgsy/side_higgsMad.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  border: 4px groove #393e46;
+}
+#shopBanner #bannerTitle {
+  font-size: 3.5em;
+  overflow: hidden;
+  font-family: "Monotype Corsiva";
+  color: #d65a31;
+}
+#shopBanner #bannerTagline {
+  font-family: "Lucida Handwriting";
+  color: #d65a31;
+}
+
+#workSpace {
+  max-width: 1500px;
+  min-height: 700px;
+}
+
+#imgSelectContainer {
+  padding: 0;
+  height: 1300px;
+}
+#imgSelectContainer #catalogueName {
+  background-color: #222831;
+  font-family: "Monotype Corsiva";
+  font-size: 2em;
+  text-align: center;
+  color: #d65a31;
+}
+#imgSelectContainer #catalogueTags {
+  height: 15%;
+  background-color: #393e46;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  color: #eeeeee;
+}
+#imgSelectContainer #catalogueTags:hover {
+  overflow-x: auto;
+}
+#imgSelectContainer #catalogueGrid {
+  height: 35%;
+  background-color: #222831;
+  overflow: hidden;
+}
+#imgSelectContainer #catalogueGrid:hover {
+  overflow: auto;
+}
+#imgSelectContainer #catalogueDescription {
+  height: 25%;
+  background-color: #393e46;
+  color: #eeeeee;
+  border: 3px solid black;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+input[type=number] {
+  width: 4em;
+}
+
+textarea {
+  width: 100%;
+  height: 6em;
+}
+
+select {
+  width: 5em;
+}
+
+.fontSelector {
+  width: 8em !important;
+}
+
+.formGroupTitle {
+  font-family: "Monotype Corsiva";
+  font-size: 2em;
+  text-align: center;
+  color: #d65a31;
+}
+
+#formWorkspace {
+  width: 700px;
+  height: 100%;
+  overflow: hidden;
+  background-color: #393e46;
+}
+#formWorkspace .formContainer {
+  background-color: #222831;
+  border: 5px groove #000000;
+}
+#formWorkspace .formContainer .formStyle {
+  background-color: #393e46;
+  color: #eeeeee;
+  border: 2px inset #eeeeee;
+  border-radius: 5%;
+}
+#formWorkspace .formContainer .addFormButton {
+  width: 100%;
+}
+#formWorkspace .catalogueAddForm {
+  color: #eeeeee;
+}
+
+#formWorkspace:hover {
+  overflow: auto;
+}
+
+#cardContainer {
+  width: 400px;
+  background-color: #222831;
+  box-shadow: 1px 1px 5px #555 inset;
+}
+
+body {
+  background-image: url("https://res.cloudinary.com/metaverse/image/upload/v1533578530/Backgrounds/ep_naturalblack.png");
+  font-family: "Verdana";
+}
+body button:hover {
+  cursor: pointer;
+}
+
+.badge {
+  line-height: 1.1;
+  padding: 0.2em 0.2em;
+  border: 2px solid black;
+  background-color: #eeeeee;
+  color: black;
+}
+
+.hidden {
+  display: none;
+}
+
+.closableDiv {
+  position: relative;
+}
+
+.closeButton {
+  opacity: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 25px;
+  width: 25px;
+  background-color: grey;
+  background-image: url("https://res.cloudinary.com/metaverse/image/upload/v1548289539/icons8-delete-48.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 1px solid black;
+  transition: opacity 0.5s;
+  z-index: 5;
+}
+
+.closableDiv:hover .closeButton {
+  opacity: 1;
+}
+
+.closeButton:hover {
+  cursor: pointer;
+}
+
+.filterToggle {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  height: 0;
+  top: 50%;
+}
+.filterToggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.filterToggle label {
+  background-color: grey;
+  border-radius: 5%;
+  -webkit-box-shadow: 0px 5px 8px 3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 5px 8px 3px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 5px 8px 3px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+}
+.filterToggle input:checked + label {
+  background-color: #d65a31;
+  outline-style: groove;
+  outline-color: white;
+  outline-width: 2px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.gridTile {
+  border: 2px solid black;
+  width: 10%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-color: #393e46;
+}
+.gridTile.activeTile {
+  border: 2px groove white;
+}
+
+.gridTile:hover {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=cardCobbler.css.map */
