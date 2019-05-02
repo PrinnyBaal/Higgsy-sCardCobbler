@@ -269,6 +269,8 @@ let catalogue={
     data.saveActiveTags([]);
     catalogue.resetGrid();
     catalogue.setTags();
+    $(`.activeTile`).removeClass("activeTile");
+    $(`#catalogueDescription`).addClass("hidden");
   },
   getGrid:function(){
     let grid;
