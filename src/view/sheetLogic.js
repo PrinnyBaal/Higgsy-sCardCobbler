@@ -202,14 +202,71 @@ let catalogue={
 
     if (checked){
       filter.push(filterName);
-      console.log("eyy new filter");
-      console.log(filter);
     }
     else{
       filter.splice(filter.indexOf(filterName),1);
     }
 
     data.saveActiveTags(filter);
+    catalogue.resetGrid();
+    catalogue.setTags();
+  },
+  tagEdit:function(newTags, catalogueIndex){
+    newTags=polishTags(newTags);
+    let activeCatalogue=data.getActiveCatalogue();
+    let catalogueType=activeCatalogue.catalogueType;
+
+    if (catalogueType=="background"){
+      let backgroundCatalogue=data.getAllBackgrounds();
+      backgroundCatalogue[catalogueIndex].tags=newTags;
+      localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
+    }
+    else{
+      let imageCatalogue=data.getAllImages();
+      imageCatalogue[catalogueIndex].tags=newTags;
+      localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
+    }
+    data.saveActiveTags([]);
+    catalogue.resetGrid();
+    catalogue.setTags();
+
+
+    function polishTags(rawTags){
+      let tags= rawTags.split(",");
+      tags=tags.filter(tag => tag.trim());
+      return tags;
+    }
+
+  },
+  removeFromCatalogue:function(catalogueIndex){
+    let activeCatalogue=data.getActiveCatalogue();
+    let catalogueType=activeCatalogue.catalogueType;
+
+    if (catalogueType=="background"){
+      let backgroundCatalogue=data.getAllBackgrounds();
+      if (backgroundCatalogue.length<=1){
+        alert("Catalogues must have at least 1 image in them at all times.  You can't delete your last image!");
+        return;
+      }
+      else{
+        backgroundCatalogue.splice(catalogueIndex, 1);
+        localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
+      }
+
+
+    }
+    else{
+      let imageCatalogue=data.getAllImages();
+      if (imageCatalogue.length<=1){
+        alert("Catalogues must have at least 1 image in them at all times.  You can't delete the last image!");
+        return;
+      }
+      else{
+        imageCatalogue.splice(catalogueIndex, 1);
+        localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
+      }
+    }
+    data.saveActiveTags([]);
     catalogue.resetGrid();
     catalogue.setTags();
   },
@@ -273,10 +330,24 @@ let catalogue={
     }
 
     function tileSetup(){
+      let tagEdit=`<br><hr><div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          Edit Tags (seperated by ','):
+        </div>
+        <div class="col-4">
+          <textarea onchange="catalogue.tagEdit(event.target.value, ${catalogueIndex})">${catalogueData[catalogueIndex].tags}</textarea>
+        </div>
+        <div class="col offset-1">
+        <button style="background-color:red" onclick="catalogue.removeFromCatalogue(${catalogueIndex})">REMOVE FROM CATALOGUE</button>
+        </div>
+      </div>
+      </div>`;
       $(`.activeTile`).removeClass("activeTile");
       $(`#gridTile${catalogueIndex}`).addClass("activeTile");
-      $("#catalogueDescription").html(`${catalogueData[catalogueIndex].description}<br><br>Tag List: ${catalogueData[catalogueIndex].tags}<br>`);
+      $("#catalogueDescription").html(`${catalogueData[catalogueIndex].description}${tagEdit}`);
       $("#catalogueDescription").removeClass("hidden");
+
     }
 
 
@@ -383,7 +454,7 @@ let catalogue={
         reader.onerror = error => reject(error);
       });
     }
-    ///HEARTH
+
 
   }
 }
