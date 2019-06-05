@@ -2,7 +2,9 @@
 sheetProj.view.sheetLogic = {
   setupUserInterface: function () {
     cardForms.loadCardForms();
+    canvasLogic.createCanvasGrid();
     canvasLogic.displayItemCard();
+    template.showTemplates();
     }
 };
 
@@ -12,7 +14,9 @@ let data={
   },
   saveCard:function(card){
     localStorage.setItem("card", JSON.stringify(card));
+    canvasLogic.displayItemCard();
   },
+  //
   getAllBackgrounds:function(){
     return JSON.parse(localStorage.getItem("backgroundCatalogue"));
   },
@@ -42,6 +46,7 @@ let data={
 
     return polishedEntries;
   },
+  //
   getActiveCatalogue:function(){
     return JSON.parse(localStorage.getItem("activeCatalogue"));
   },
@@ -54,6 +59,7 @@ let data={
       }
     ));
   },
+  //
   getActiveTags:function(){
     return JSON.parse(localStorage.getItem("activeCatalogue")).activeTags;
   },
@@ -62,7 +68,14 @@ let data={
     activeCatalogue.activeTags=newActives;
     localStorage.setItem("activeCatalogue", JSON.stringify(activeCatalogue));
   },
-
+  //
+  getTemplates:function(){
+    return JSON.parse(localStorage.getItem("templateCatalogue"));
+  },
+  saveTemplates:function(template){
+    localStorage.setItem("templateCatalogue", JSON.stringify(template));
+  },
+  //
   getFonts:function(){
     return JSON.parse(localStorage.getItem("fonts"));
   },
@@ -146,6 +159,19 @@ let data={
 
     this.detect = detect;
   },
+  //
+  download:function (filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
 }
 
 let catalogue={
@@ -282,9 +308,7 @@ let catalogue={
     let imageData=data.getFilteredEntries();
 
     for (let i=0; i<imageData.length; i++){
-
       gridTiles+=`<div onclick="catalogue.gridTileClick(${activeCatalogue.imageIndex},'${imageData[i].url}', ${imageData[i].ID})" id="gridTile${imageData[i].ID}" class="gridTile" style=" background-image:url('${imageData[i].url}'); )"></div>`;
-
     }
 
     grid=`<div class="row tileRow" style="height:20%;">
@@ -349,25 +373,12 @@ let catalogue={
       $(`#gridTile${catalogueIndex}`).addClass("activeTile");
       $("#catalogueDescription").html(`${catalogueData[catalogueIndex].description}${tagEdit}`);
       $("#catalogueDescription").removeClass("hidden");
-
     }
-
-
-
-
-
   },
   setTileDims:function(){
     let height=$(".tileRow").height();
     let width=$(".gridTile").width();
-    // if (width>height){
-    //   $(".gridTile").width(height);
-    // }
-    // else{
-    //   $(".tileRow").height(width);
-    // }
     $(".tileRow").height(width);
-    console.log(width);
   },
 
   gridTileClick:function(imageIndex, newURL, newCataNum){
@@ -416,7 +427,6 @@ let catalogue={
       if (catalogueType=="background"){
         let backgroundCatalogue=data.getAllBackgrounds();
         backgroundCatalogue.push(newEntry);
-        console.log(backgroundCatalogue);
         localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
       }
       else{
@@ -458,6 +468,63 @@ let catalogue={
     }
 
 
+  }
+}
+
+let template={
+  unlockButtons:function(){
+    $('.lockedTemplateButtons').removeAttr('disabled');
+  },
+  showTemplates:function(){
+    let templates=data.getTemplates();
+    let templateOptions='<option selected disabled value="none">Select a Card Template</option>';
+    templates.forEach(function(template, index){
+      templateOptions+=`<option value=${index}>${template.title}</option>`;
+    });
+
+    $("#templateDropdown").html(templateOptions);
+    $('.lockedTemplateButtons').attr('disabled','disabled');
+  },
+  saveTemplate:function(){
+    let templates=data.getTemplates();
+    let currentCard=data.getCard();
+    let selectedTemplate=$("#templateDropdown")[0].value;
+    if (selectedTemplate!="none"){
+      templates[parseInt(selectedTemplate)].card=currentCard;
+      data.saveTemplates(templates);
+      alert("Card Saved!");
+    }
+  },
+  newTemplate:function(){
+    let templates=data.getTemplates();
+    let currentCard=data.getCard();
+    let title=$("#newTemplateTitle")[0].value;
+    if (!title.length){
+      title="Unnamed";
+    }
+    let newTemplate={title:title, card:currentCard};
+    templates.push(newTemplate);
+    data.saveTemplates(templates);
+    template.showTemplates();
+  },
+  deleteTemplate:function(){
+    let templates=data.getTemplates();
+    let selectedTemplate=$("#templateDropdown")[0].value;
+    if (selectedTemplate!="none"){
+      templates.splice(parseInt(selectedTemplate), 1);
+      data.saveTemplates(templates);
+      template.showTemplates();
+    }
+  },
+  loadTemplate:function(){
+    let templates=data.getTemplates();
+    let selectedTemplate=$("#templateDropdown")[0].value;
+    if (selectedTemplate!="none"){
+      data.saveCard(templates[parseInt(selectedTemplate)].card);
+
+      cardForms.loadCardForms();
+      canvasLogic.displayItemCard();
+    }
   }
 }
 
@@ -550,8 +617,8 @@ let cardForms={
                     <hr>
                     <div class="row mt-2">
                       <div class="col-4">Position image:</div>
-                      <div class="col"><label>X-pos:<input type="number" onchange="imageFuncs.changeImageStats('xPos',event.target.value,${i})" placeholder='X-coordinate as integer...' value='${image.xPos}'></label></div>
-                      <div class="col"><label>Y-pos:<input type="number" onchange="imageFuncs.changeImageStats('yPos',event.target.value,${i})" placeholder='Y-coordinate as integer...' value='${image.yPos}'></label></div>
+                      <div class="col"><label>X-pos:<input type="number" onchange="imageFuncs.changeImageStats('xPos',event.target.value,${i})" placeholder='X-coordinate as integer...' value='${image.xPos}' step="5"></label></div>
+                      <div class="col"><label>Y-pos:<input type="number" onchange="imageFuncs.changeImageStats('yPos',event.target.value,${i})" placeholder='Y-coordinate as integer...' value='${image.yPos}' step="5"></label></div>
                     </div>
                     <hr>
                     <div class="row mt-2">
@@ -584,8 +651,8 @@ let cardForms={
               </div>
                 <div class="row">
                   <div class="col-2">Position text:</div>
-                  <div class="col-3"><label>X-pos:<input onchange="textFormFuncs.changeTextStats('xPos',event.target.value,${i})" type="number" value='${text.xPos}'></label></div>
-                  <div class="col-3"><label>Y-pos:<input onchange="textFormFuncs.changeTextStats('yPos',event.target.value,${i})" type="number" value='${text.yPos}'></label></div>
+                  <div class="col-3"><label>X-pos:<input onchange="textFormFuncs.changeTextStats('xPos',event.target.value,${i})" type="number" value='${text.xPos}' step="5"></label></div>
+                  <div class="col-3"><label>Y-pos:<input onchange="textFormFuncs.changeTextStats('yPos',event.target.value,${i})" type="number" value='${text.yPos}' step="5"></label></div>
                   <div class="col-4"><label>Align:<select onchange="textFormFuncs.changeTextStats('fontAlign',event.target.value,${i})" id="alignSet${i}">
                   <option value="left" ${leftSelect}>Left</option>
                   <option value="center" ${centerSelect}>Center</option>
@@ -741,7 +808,6 @@ let imageFuncs={
   },
   directURLChange:function(newURL, imageIndex){
     let card=data.getCard();
-    console.log(imageIndex);
 
     if (imageIndex!==undefined){
       let image=card.images[imageIndex];
@@ -788,7 +854,6 @@ let textFormFuncs={
     let card=data.getCard();
     let text=card.text[textIndex];
     text.content=newContent;
-    console.log(newContent);
     data.saveCard(card);
   },
   addTextForm:function(){
@@ -806,8 +871,9 @@ let textFormFuncs={
 }
 
 let canvasLogic={
-  displayItemCard:function(gridOn){
+  displayItemCard:function(){
 
+      let gridOn=$("#isGridActive")[0].checked;
       let card=data.getCard();
       let promisedBackground= new Promise(function (resolve, reject){
         const img = new Image();
@@ -828,9 +894,6 @@ let canvasLogic={
             img.src = card.images[i].content;
           })
         );
-      //   promisedItems[i].catch(function(error) {
-      //   console.log(error);
-      // });
       }
 
       Promise.all([promisedBackground, ...promisedItems]).then(
@@ -848,17 +911,10 @@ let canvasLogic={
                         0, 0, canvas.width, canvas.height);
 
           for (let i=1; i<img.length; i++){
-            // ctx.drawImage(img[i], 0, 0, img[i].width,    img[i].height,
-            //               canvas.width/4, canvas.height/4.5, canvas.width/2, canvas.height/2.5);
             ctx.drawImage(img[i], 0, 0, img[i].width,    img[i].height,
                           card.images[i-1].xPos, card.images[i-1].yPos, card.images[i-1].width, card.images[i-1].height);
-                          console.log(card.images[i-1]);
-            // context.drawImage(img,sx,sy,swidth,sheight,
-            //                   x,y,width,height);
+
           }
-
-
-
           //write name
 
           card.text.forEach(function(textObj){
@@ -869,78 +925,75 @@ let canvasLogic={
             let lines = textObj.content.split('\n');
             for (let i=0; i<lines.length; i++){
               ctx.fillText(lines[i], textObj.xPos, parseInt(textObj.yPos)+(i*lineHeight));
-              console.log(parseInt(textObj.yPos)+(i*lineHeight));
             }
           });
 
           if (gridOn){
-
-            ctx.strokeStyle="#00ff40";
-            for (let y=0; y<canvas.height; y+=25){
-              for (let x=0; x<canvas.width; x+=25){
-                ctx.rect(x, y, 25, 25);
-                ctx.stroke();
-              }
-            }
+            $("#gridCanvas").removeClass("hidden");
           }
           else{
-            $("#gridLayerButton").removeClass("hidden");
+            $("#gridCanvas").addClass("hidden");
           }
 
       }).catch(function(err) {
-        alert(err); // some coding error in handling happened
+        console.log(err); // some coding error in handling happened
       });;
 
 
 
 
 },
-
-// displayCardGrid:function(){
-//   let card=data.getCard();
-//   let promisedBackground= new Promise(function (resolve, reject){
-//     const img = new Image();
-//     img.onload = () => resolve(img);
-//     img.onerror = () => reject('error');
-//
-//     img.src = card.background;
-//   });
-//
-//   let promisedItems=[]
-//
-//
-//   Promise.all([promisedBackground]).then(
-//     function(img){
-//       let canvas = $("#cardCanvas")[0];
-//       let ctx = canvas.getContext('2d');
-//
-//       canvas.crossOrigin = "Anonymous";
-//       ctx.textBaseline = "middle";
-//       ctx.textAlign = "center";
-//
-//       //load images THEN draw images
-//       ctx.drawImage(img[0], 0, 0, img[0].width,    img[0].height,
-//                     0, 0, canvas.width, canvas.height);
-//
-//
-//
-//
-//
-//   });
-// }
+  createCanvasGrid:function(){
+    let canvas = $("#gridCanvas")[0];
+    let ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle="#00ff40";
+    let targetHeight=canvas.height;
+    let targetWidth=canvas.width;
+    for (let y=0; y<targetHeight; y+=25){
+      for (let x=0; x<targetWidth; x+=25){
+        ctx.rect(x, y, 25, 25);
+        ctx.stroke();
+      }
+    }
+  },
 }
 
-
-
-
-
-function setClicks(){
-  $("#resetButton").click(resetStorage);
-
-  $("#charPortrait").click({element:'#charOverlay'},toggleDisplay);
-  $("#exitPageButton").click({element:'#charOverlay'},toggleDisplay);
-  $("#skillsPageButton").click({page:'#skillSheet'},turnPage);
-  $("#statsPageButton").click({page:'#statSheet'},turnPage);
-
-  $(".tabHead").click(collapseTabBody);
+let sharing={
+  getTemplateJSON:function(){
+    let templates=data.getTemplates();
+    let selectedTemplate=$("#templateDropdown")[0].value;
+    console.log($("#templateDropdown")[0]);
+    console.log(selectedTemplate);
+    if (selectedTemplate!="none"){
+      data.download(`${templates[selectedTemplate].title}.json`, JSON.stringify(templates[selectedTemplate]));
+    }
+  },
+  unlockTemplateJSON:function(files){
+    const numFiles=files.length;
+    console.log(files);
+    let promiseArray=[];
+    for (let i = 0, numFiles = files.length; i < numFiles; i++) {
+      const file = files[i];
+      let newPromise= new Promise(function(resolve, reject ){
+        var reader = new FileReader();
+        reader.onload = ()=>{let obj = JSON.parse(event.target.result); resolve(obj);};
+        reader.readAsText(file);
+      });
+      promiseArray.push(newPromise);
+    }
+    Promise.all(promiseArray).then(function(values) {
+      let templates=data.getTemplates();
+      values.forEach((result)=>{
+        if(result.title && result.card){
+          templates.push(result);
+        }
+        else{
+          console.log("passed invalid JSON, ignoring....");
+        }
+      });
+      data.saveTemplates(templates);
+      template.showTemplates();
+    });
+  }
 }

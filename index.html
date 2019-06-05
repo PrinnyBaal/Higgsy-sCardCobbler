@@ -110,20 +110,67 @@
             </table>
           </div>
         </div>
+        <div class="formContainer">
+          <div class="formGroupTitle py-2">Save/Load Card Templates</div>
+          <div id="templateManager" class="container-fluid">
+            <div class="row">
+              <div class="col-4 offset-4">
+                <select id="templateDropdown" style="height:100%; width:100%;" onchange="template.unlockButtons()">
+                  <option>sample</option>
+                </select>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-2 offset-3">
+                <button class="lockedTemplateButtons" disabled style="height:100%;" onclick="template.saveTemplate()">Save to selected</button>
+              </div>
+              <div class="col-2 offset-2">
+                <button class="lockedTemplateButtons" disabled style="height:100%;" onclick="template.loadTemplate()">Load selected</button>
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+              <div class="col-2 offset-3">
+                <button onclick="template.newTemplate()">Save as NEW template</button>
+              </div>
+
+              <div class="col-3">
+                <input id="newTemplateTitle" style="position:absolute; bottom:0px; left:0px; width:100%;" type="text" placeholder="Name of new template">
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-2">
+              <div class="col-2 offset-3" style="color:white;">
+                <label for="avatar">Import Templates:</label>
+
+                <input multiple onchange="sharing.unlockTemplateJSON(this.files)" type="file"
+                       id="avatar" name="avatar"
+                       accept="application/json">
+                </div>
+                <div class="col-2 offset-2">
+                  <button class="lockedTemplateButtons" disabled style="height:100%;" onclick="sharing.getTemplateJSON()">Download Selected Template</button>
+                </div>
+            </div>
+            <hr>
+            <div class="row my-4">
+              <div class="col-3 offset-5">
+                <button class="lockedTemplateButtons" disabled onclick="template.deleteTemplate()">DELETE selected</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
       <div class="col-4" id="cardContainer" style="position:relative;">
-        <canvas width="350" height="516"  style="position:absolute; top:15px;left: 0;
-right: 0;
-margin: auto;" id="cardCanvas">
+        <canvas width="350" height="516"  style="position:absolute; top:15px;left: 0;right: 0;margin: auto;" id="cardCanvas">
         </canvas>
-        <button style="position:absolute; bottom:0; left:0;" onclick="canvasLogic.displayItemCard()" id="craftCardButton" class="">
-          Load Card
-        </button>
+        <canvas class="hidden" width="350" height="516"  style="position:absolute; top:15px;left: 0;right: 0;margin: auto; z-index:1;" id="gridCanvas">
+        </canvas>
 
-        <button style="position:absolute; bottom:0; right:0;" onclick="canvasLogic.displayItemCard(true)" id="gridLayerButton" class="hidden">
-          25x25 Grid View
-        </button>
+        <div style="position:absolute; bottom:0; right:0; background-color:white; padding:1%; border-radius:5%; border:black solid 2px;"  id="gridLayerButton">
+          <label>Display 25x25 Grid <input type="checkbox" id="isGridActive" onchange="canvasLogic.displayItemCard()"></label>
+        </div>
 
 
       </div>
