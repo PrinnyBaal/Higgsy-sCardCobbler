@@ -16,10 +16,7 @@ let data={
     localStorage.setItem("card", JSON.stringify(card));
     canvasLogic.displayItemCard();
   },
-  //
-  getAllBackgrounds:function(){
-    return JSON.parse(localStorage.getItem("backgroundCatalogue"));
-  },
+
   getAllImages:function(){
     return JSON.parse(localStorage.getItem("imageCatalogue"));
   },
@@ -29,13 +26,7 @@ let data={
     let rawEntries;
     let polishedEntries=[];
     let entryLength;
-
-    if (activeCatalogue.catalogueType=="background"){
-      rawEntries=data.getAllBackgrounds();
-    }
-    else{
-      rawEntries=data.getAllImages();
-    }
+    rawEntries=data.getAllImages();
     entryLength=rawEntries.length;
     for(let i=0; i<entryLength; i++){
       if(utility.checkInclusion(rawEntries[i].tags,filter)){
@@ -50,11 +41,11 @@ let data={
   getActiveCatalogue:function(){
     return JSON.parse(localStorage.getItem("activeCatalogue"));
   },
-  resetActiveCatalogue:function(givenCatalogueType, givenImageIndex){
+  resetActiveCatalogue:function(givenImageIndex){
     localStorage.setItem("activeCatalogue", JSON.stringify(
       {
         activeTags:[],
-        catalogueType:givenCatalogueType,
+        // catalogueType:givenCatalogueType,
         imageIndex:givenImageIndex
       }
     ));
@@ -175,17 +166,13 @@ let data={
 }
 
 let catalogue={
-  getImageData:function(catalogueType){
+  getImageData:function(){
     let imageData;
-    if (catalogueType=="background"){
-      imageData=data.getAllBackgrounds();
-    }
-    else{
-      imageData=data.getAllImages();
-    }
+
+    imageData=data.getAllImages();
     return imageData;
   },
-  setTags:function(catalogueType){
+  setTags:function(){
 
     // let imageData=catalogue.getImageData(catalogueType);
     let imageData=data.getFilteredEntries();
@@ -240,18 +227,13 @@ let catalogue={
   tagEdit:function(newTags, catalogueIndex){
     newTags=polishTags(newTags);
     let activeCatalogue=data.getActiveCatalogue();
-    let catalogueType=activeCatalogue.catalogueType;
+    // let catalogueType=activeCatalogue.catalogueType;
 
-    if (catalogueType=="background"){
-      let backgroundCatalogue=data.getAllBackgrounds();
-      backgroundCatalogue[catalogueIndex].tags=newTags;
-      localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
-    }
-    else{
-      let imageCatalogue=data.getAllImages();
-      imageCatalogue[catalogueIndex].tags=newTags;
-      localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
-    }
+
+    let imageCatalogue=data.getAllImages();
+    imageCatalogue[catalogueIndex].tags=newTags;
+    localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
+
     data.saveActiveTags([]);
     catalogue.resetGrid();
     catalogue.setTags();
@@ -266,32 +248,20 @@ let catalogue={
   },
   removeFromCatalogue:function(catalogueIndex){
     let activeCatalogue=data.getActiveCatalogue();
-    let catalogueType=activeCatalogue.catalogueType;
-
-    if (catalogueType=="background"){
-      let backgroundCatalogue=data.getAllBackgrounds();
-      if (backgroundCatalogue.length<=1){
-        alert("Catalogues must have at least 1 image in them at all times.  You can't delete your last image!");
-        return;
-      }
-      else{
-        backgroundCatalogue.splice(catalogueIndex, 1);
-        localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
-      }
+    // let catalogueType=activeCatalogue.catalogueType;
 
 
-    }
-    else{
-      let imageCatalogue=data.getAllImages();
-      if (imageCatalogue.length<=1){
+
+    let imageCatalogue=data.getAllImages();
+    if (imageCatalogue.length<=1){
         alert("Catalogues must have at least 1 image in them at all times.  You can't delete the last image!");
         return;
-      }
-      else{
+    }
+    else{
         imageCatalogue.splice(catalogueIndex, 1);
         localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
-      }
     }
+
     data.saveActiveTags([]);
     catalogue.resetGrid();
     catalogue.setTags();
@@ -302,7 +272,7 @@ let catalogue={
     let grid;
     let gridTiles="";
     let activeCatalogue=data.getActiveCatalogue();
-    let catalogueType=activeCatalogue.catalogueType;
+    // let catalogueType=activeCatalogue.catalogueType;
     // let imageData=catalogue.getImageData(catalogueType);
     // let taglist=data.getActiveTags();
     let imageData=data.getFilteredEntries();
@@ -328,32 +298,22 @@ let catalogue={
     let imageData=data.getFilteredEntries();
     let activeCatalogue=data.getActiveCatalogue();
     let imageIndex=activeCatalogue.imageIndex;
-    let catalogueType=activeCatalogue.catalogueType;
+    // let catalogueType=activeCatalogue.catalogueType;
 
     let activeImage;
     let catalogueData;
     let catalogueIndex;
 
-    if (catalogueType=="background"){
-      if (!card.backgroundID && card.backgroundID!=0){
-        return false;
-      }
-      catalogueData=data.getAllBackgrounds();
-      catalogueIndex=card.backgroundID;
-      tileSetup();
-      return;
 
-    }
-    else{
-      activeImage=card.images[imageIndex];
-      if (!activeImage.catalogueNum && activeImage.catalogueNum!=0){
+    activeImage=card.images[imageIndex];
+    if (!activeImage.catalogueNum && activeImage.catalogueNum!=0){
         return false;
-      }
-      catalogueData=data.getAllImages();
-      catalogueIndex=activeImage.catalogueNum;
-      tileSetup();
-      return;
     }
+    catalogueData=data.getAllImages();
+    catalogueIndex=activeImage.catalogueNum;
+    tileSetup();
+    return;
+
 
     function tileSetup(){
       let tagEdit=`<br><hr><div class="container-fluid">
@@ -383,24 +343,20 @@ let catalogue={
 
   gridTileClick:function(imageIndex, newURL, newCataNum){
       let card=data.getCard();
-      let tileType=data.getActiveCatalogue().catalogueType;
+      // let tileType=data.getActiveCatalogue().catalogueType;
 
-      if (tileType=="background"){
-        card.backgroundID=newCataNum;
-        card.background=newURL;
-      }
-      else{
-        let image=card.images[imageIndex];
-        image.content=newURL;
-        image.catalogueNum=newCataNum;
-      }
+
+      let image=card.images[imageIndex];
+      image.content=newURL;
+      image.catalogueNum=newCataNum;
+
 
       data.saveCard(card);
       cardForms.loadCardForms();
       catalogue.setActiveTile();
   },
   addToCatalogue:function(){
-    let catalogueType=$('input[name=catalogueType]:checked').val();
+    // let catalogueType=$('input[name=catalogueType]:checked').val();
     let uploadType=$('input[name=uploadType]:checked').val();
     // let fileGet=$('#catAddByFile').val();
     let fileGet=document.querySelector('input[type=file]').files[0];
@@ -424,16 +380,11 @@ let catalogue={
     function uploadToCatalogue(finalUrl){
       let newEntry=new construct.catalogueEntry(finalUrl, description, tags);
 
-      if (catalogueType=="background"){
-        let backgroundCatalogue=data.getAllBackgrounds();
-        backgroundCatalogue.push(newEntry);
-        localStorage.setItem("backgroundCatalogue", JSON.stringify(backgroundCatalogue));
-      }
-      else{
-        let imageCatalogue=data.getAllImages();
-        imageCatalogue.push(newEntry);
-        localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
-      }
+
+      let imageCatalogue=data.getAllImages();
+      imageCatalogue.push(newEntry);
+      localStorage.setItem("imageCatalogue", JSON.stringify(imageCatalogue));
+
 
       alert("New image successfully added to Catalogue!");
 
@@ -532,75 +483,24 @@ let cardForms={
   loadCardForms:function(){
     let card=data.getCard();
     let textForms=``;
-    let imageForms=`<hr><div class="row backgroundForm formStyle m-1 py-2">
-          <div class="col">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="badge">Background</div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  Choose background from catalogue:
-                </div>
-
-                <div class="col">
-                  <button onclick="imageFuncs.openCatalogue('background', 0)">Open</button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-2 mt-1 offset-1">
-                  <i>OR</i>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">Set Background by URL:</div>
-                <div class="col"><input type="text" onchange="imageFuncs.directURLChange(event.target.value)" value='${card.background}'></div>
-              </div>
-            </div>
-          </div>
-        </div>`;
-
+    let imageForms="";
 
         for (let i=0; i<card.images.length; i++){
           let image=card.images[i];
-          // col-4 offset-2
-          // <table>
-          //   <tr>
-          //     <td>
-          //       Choose item image from catalogue:
-          //     </td>
-          //     <td>
-          //       <button onclick="imageFuncs.openCatalogue('images', ${i})">Open</button>
-          //     </td>
-          //   </tr>
-          //   <tr>
-          //     <td>Set Image by URL:</td>
-          //     <td><input type="text" onchange="imageFuncs.directURLChange(event.target.value, ${i})" placeholder='Enter URL...' value='${image.content}'></td>
-          //   </tr>
-          //   <tr>
-          //     <td>Position image:</td>
-          //     <td><label>X-pos:<input type="number" onchange="imageFuncs.changeImageStats('xPos',event.target.value,${i})" placeholder='X-coordinate as integer...' value='${image.xPos}'></label></td>
-          //     <td><label>X-pos:<input type="number" onchange="imageFuncs.changeImageStats('yPos',event.target.value,${i})" placeholder='Y-coordinate as integer...' value='${image.yPos}'></label></td>
-          //   </tr>
-          //   <tr>
-          //     <td>Size image:</td>
-          //     <td><label>Width<input type="number" onchange="imageFuncs.changeImageStats('width',event.target.value,${i})" placeholder='Enter a width...' value='${image.width}'></label></td>
-          //     <td><label>Height<input type="number" onchange="imageFuncs.changeImageStats('height',event.target.value,${i})" placeholder='Enter a height...' value='${image.height}'></label></td>
-          //   </tr>
-          // </table>
+
           imageForms+=`<hr><div class="row imageForm m-1 py-2 formStyle">
                 <div class="col closableDiv">
                   <div onclick="imageFuncs.deleteImageForm(${i})" class="closeButton"></div>
                   <div class="container-fluid">
                     <div class="row">
-                      <div class="badge">Image: ${i}</div>
+                      <div class="badge">Image: ${i} <button class="tickUp" ${i==0? "disabled":""} onclick="imageFuncs.moveLayerUp(${i})">	&#9650;</button><button ${i==card.images.length-1? "disabled":""} class="tickDown" onclick="imageFuncs.moveLayerDown(${i})">&#9660;</button></div>
                     </div>
                     <div class="row mt-2">
                       <div class="col-4">
                         Choose item image from catalogue:
                       </div>
                       <div class="col-2">
-                        <button onclick="imageFuncs.openCatalogue('images', ${i})">Open</button>
+                        <button onclick="imageFuncs.openCatalogue(${i})">Open</button>
                       </div>
                     </div>
                     <div class="row">
@@ -613,6 +513,7 @@ let cardForms={
 
                       <div class="col-4">Set Image by URL:</div>
                       <div class="col"><input type="text" onchange="imageFuncs.directURLChange(event.target.value, ${i})" placeholder='Enter URL...' value='${image.content}'></div>
+                      <div class="col-2 imageFormPreview"  style="background-image:url('${image.content}');"></div>
                     </div>
                     <hr>
                     <div class="row mt-2">
@@ -683,30 +584,6 @@ let cardForms={
           </div>`;
         }
 
-        // <table style="width:100%;">
-        //   <tr>
-        //     <td>
-        //      <textarea style="white-space: pre-wrap;" onchange="textFormFuncs.changeTextContent(event.target.value,${i})" placeholder="Set text here...">${text.content}</textarea>
-        //     </td>
-        //   </tr>
-        //   <tr>
-        //     <td>Position text:</td>
-        //     <td><label>X-pos:<input onchange="textFormFuncs.changeTextStats('xPos',event.target.value,${i})" type="number" value='${text.xPos}'></label></td>
-        //     <td><label>X-pos:<input onchange="textFormFuncs.changeTextStats('yPos',event.target.value,${i})" type="number" value='${text.yPos}'></label></td>
-        //     <td><label>Align:<select onchange="textFormFuncs.changeTextStats('fontAlign',event.target.value,${i})" id="alignSet${i}">
-        //     <option value="left" ${leftSelect}>Left</option>
-        //     <option value="center" ${centerSelect}>Center</option>
-        //     <option value="right" ${rightSelect}>Right</option>
-        //     </select></label></td>
-        //   </tr>
-        //   <tr>
-        //     <td style="width:10%;">Set Font:</td>
-        //     <td style="width:10%;"><label>Type<select onchange="textFormFuncs.changeTextStats('fontFam',event.target.value,${i})" id="fontSelect${i}" class="fontSelector">
-        //     </select></label></td>
-        //     <td style="width:10%;"><label>Size<input type="number" onchange="textFormFuncs.changeTextStats('fontNum',event.target.value,${i})" value='${text.fontNum}'></label></td>
-        //     <td style="width:10%;"><label>Color<input type="color" onchange="textFormFuncs.changeTextStats('fontColor',event.target.value,${i})" value="${text.fontColor}"></label></td>
-        //   </tr>
-        // </table>
 
     imageForms+=`<div class="mt-2 row">
     <div class="col-4 offset-4">
@@ -734,18 +611,6 @@ let cardForms={
       let fonts=data.getFonts();
 
       let fontSelect=``;
-
-      // <option value="armor">Armor Bonus (enhancement)</option>
-      // <option value="weapon">Weapon Bonus (enhancement)</option>
-      // <option value="spellSlot">Bonus Spell</option>
-      // <option value="spellResist">Spell Resistance</option>
-      // <option value="spellEffect">Spell Effect</option>
-      //
-      // <option value="abilityScore">Ability Bonus (enhancement)</option>
-      // <option value="AC">AC Bonus (deflection/other)</option>
-      // <option value="natArmor">Natural Armor Bonus (Enhancement)</option>
-      // <option value="saves">Save Bonuses (Resistance/Other)</option>
-      // <option value="skills">Skill Bonuses (Competence)</option>
 
       //Create for loop to create options for each font.  Could we set the font for each to be their own individual fonts?  That SEEMS totally doable...
       fonts.forEach(function(font){
@@ -779,15 +644,13 @@ let utility={
 }
 
 let imageFuncs={
-  openCatalogue:function(catalogueType, imageIndex){
-    data.resetActiveCatalogue(catalogueType, imageIndex);
+  openCatalogue:function(imageIndex){
+    $("#imgSelectContainer").removeClass("hidden");
+    data.resetActiveCatalogue(imageIndex);
     let card=data.getCard();
     let name=`Image Catalogue ${imageIndex}: `;
     let description=card.description;
-    if (catalogueType=="background"){
-      name="Background Catalogue:";
 
-    }
 
     //set name section of catalogue
     $("#catalogueName").html(name);
@@ -797,7 +660,7 @@ let imageFuncs={
     catalogue.setTags();
     //set catalogue grid
 
-    $("#catalogueGrid").html(catalogue.getGrid(catalogueType));
+    $("#catalogueGrid").html(catalogue.getGrid());
 
     //set selected item description
     $("#catalogueDescription").addClass("hidden");
@@ -805,6 +668,9 @@ let imageFuncs={
 
     $("#imgSelectContainer").removeClass("hidden");
     catalogue.setTileDims();
+  },
+  closeCatalogue:function(){
+    $("#imgSelectContainer").addClass("hidden");
   },
   directURLChange:function(newURL, imageIndex){
     let card=data.getCard();
@@ -840,6 +706,20 @@ let imageFuncs={
     card.images.splice(imageIndex, 1);
     data.saveCard(card);
     cardForms.loadCardForms();
+  },
+  moveLayerUp:function(imageIndex){
+    let card=data.getCard();
+    card.images.splice(imageIndex-1, 0, card.images.splice(imageIndex, 1)[0]);
+    data.saveCard(card);
+    cardForms.loadCardForms();
+    imageFuncs.closeCatalogue();
+  },
+  moveLayerDown:function(imageIndex){
+    let card=data.getCard();
+    card.images.splice(imageIndex+1, 0, card.images.splice(imageIndex, 1)[0]);
+    data.saveCard(card);
+    cardForms.loadCardForms();
+    imageFuncs.closeCatalogue();
   }
 }
 
@@ -875,28 +755,23 @@ let canvasLogic={
 
       let gridOn=$("#isGridActive")[0].checked;
       let card=data.getCard();
-      let promisedBackground= new Promise(function (resolve, reject){
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(`Sorry!  We weren't able to load the url "${card.background}" from your background selection.`);
 
-        img.src = card.background;
-      });
 
       let promisedItems=[]
       for (let i=0; i<card.images.length; i++){
+
         promisedItems.push(
           new Promise(function (resolve, reject){
             const img = new Image();
             img.onload = () => resolve(img);
-            img.onerror = () => reject(`Sorry!  We weren't able to load the url "${card.images[i].content}" from image number: "${i}"`);
+            img.onerror = () => resolve(false);
 
             img.src = card.images[i].content;
           })
         );
       }
 
-      Promise.all([promisedBackground, ...promisedItems]).then(
+      Promise.all([...promisedItems]).then(
         function(img){
           let canvas = $("#cardCanvas")[0];
           let ctx = canvas.getContext('2d');
@@ -907,12 +782,12 @@ let canvasLogic={
           ctx.textAlign = "center";
 
           //load images THEN draw images
-          ctx.drawImage(img[0], 0, 0, img[0].width,    img[0].height,
-                        0, 0, canvas.width, canvas.height);
 
-          for (let i=1; i<img.length; i++){
-            ctx.drawImage(img[i], 0, 0, img[i].width,    img[i].height,
-                          card.images[i-1].xPos, card.images[i-1].yPos, card.images[i-1].width, card.images[i-1].height);
+          for (let i=0; i<img.length; i++){
+            if (img[i]){
+              ctx.drawImage(img[i], 0, 0, img[i].width,    img[i].height,
+                            card.images[i].xPos, card.images[i].yPos, card.images[i].width, card.images[i].height);
+            }
 
           }
           //write name
@@ -963,15 +838,15 @@ let sharing={
   getTemplateJSON:function(){
     let templates=data.getTemplates();
     let selectedTemplate=$("#templateDropdown")[0].value;
-    console.log($("#templateDropdown")[0]);
-    console.log(selectedTemplate);
+    // console.log($("#templateDropdown")[0]);
+    // console.log(selectedTemplate);
     if (selectedTemplate!="none"){
       data.download(`${templates[selectedTemplate].title}.json`, JSON.stringify(templates[selectedTemplate]));
     }
   },
   unlockTemplateJSON:function(files){
     const numFiles=files.length;
-    console.log(files);
+    // console.log(files);
     let promiseArray=[];
     for (let i = 0, numFiles = files.length; i < numFiles; i++) {
       const file = files[i];

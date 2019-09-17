@@ -76,11 +76,11 @@
                   Add image to catalogue:
                 </th> -->
               </tr>
-              <tr>
+              <!-- <tr>
                 <td>Add art to which catalogue?:</td>
                 <td><input type="radio" name="catalogueType" value="background"> Card Art
                   <input type="radio" name="catalogueType" value="item" checked="checked"> Item Art</td>
-              </tr>
+              </tr> -->
               <tr class="hidden">
                 <td>Upload by File or URL?:</td>
                 <td><input type="radio" name="uploadType" value="file"> File
@@ -169,7 +169,11 @@
         </canvas>
 
         <div style="position:absolute; bottom:0; right:0; background-color:white; padding:1%; border-radius:5%; border:black solid 2px;"  id="gridLayerButton">
-          <label>Display 25x25 Grid <input type="checkbox" id="isGridActive" onchange="canvasLogic.displayItemCard()"></label>
+          <label>Display 25px by 25px Mesh <input type="checkbox" id="isGridActive" onchange="canvasLogic.displayItemCard()"></label>
+        </div>
+
+        <div style="position:absolute; bottom:0; left:0; background-color:white; padding:1%; border-radius:5%; border:black solid 2px;"  id="gridLayerButton">
+          <label>Canvas is 350 x 516 pixels</label>
         </div>
 
 
@@ -184,7 +188,7 @@
     <div class="row">
       <div  id="imgSelectContainer" class="col hidden mt-4">
         <div id="catalogueName">Name</div>
-        <div class="px-3" id="catalogueTags" style="">
+        <div class="px-3 hoverFlow" id="catalogueTags" style="">
 
         </div>
 
@@ -237,5 +241,7 @@
         </div>
       </div>
   </div>
+
+
 
 </body>

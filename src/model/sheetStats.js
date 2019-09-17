@@ -8,8 +8,8 @@ let construct={
   card:function(){
     this.text=[];
     this.images=[];
-    this.background="https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png";
-    this.backgroundID=0;
+    // this.background="https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png";
+    // this.backgroundID=0;
   },
   text:function(){
     this.content="blah; blah";
@@ -37,37 +37,37 @@ let construct={
 }
 
 
-let backgroundCatalogue=[
-
-{url:"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png",
-description:"Artist: BernalesTomas",
-tags:["BackgroundCard", "BernalesTomas"]
-},
-
-{url:"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg",
-description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
-tags:["BackgroundCard", "BrunoScheele"]
-},
-
-{url:"https://res.cloudinary.com/metaverse/image/upload/v1559675816/card%20frames/magicitemcards_template_front_poker.jpg",
-description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
-tags:["BackgroundCard", "BrunoScheele"]
-},
-
-{url:"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png",
-description:"Artist:....it's...it's just blank, there's no attribution needed here.",
-tags:["Blank"]
-},
-
-
-
-
-
-
-
-
-
-];
+// let backgroundCatalogue=[
+//
+// {url:"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png",
+// description:"Artist: BernalesTomas",
+// tags:["BackgroundCard", "BernalesTomas"]
+// },
+//
+// {url:"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg",
+// description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
+// tags:["BackgroundCard", "BrunoScheele"]
+// },
+//
+// {url:"https://res.cloudinary.com/metaverse/image/upload/v1559675816/card%20frames/magicitemcards_template_front_poker.jpg",
+// description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
+// tags:["BackgroundCard", "BrunoScheele"]
+// },
+//
+// {url:"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png",
+// description:"Artist:....it's...it's just blank, there's no attribution needed here.",
+// tags:["Blank"]
+// },
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// ];
 
 let imageCatalogue=[
 {url:"https://res.cloudinary.com/metaverse/image/upload/v1556475584/Domigorgon/Armor/40.png",
@@ -234,6 +234,7 @@ tags:["Armor", "Domigorgon"]
 description:"Artist: Domigorgon<br><br>",
 tags:["Armor", "Domigorgon"]
 },
+/////
 {url:"https://res.cloudinary.com/metaverse/image/upload/v1556475434/Domigorgon/Armor/01.png",
 description:"Artist: Domigorgon<br><br>",
 tags:["Armor", "Domigorgon"]
@@ -256,7 +257,27 @@ description:"Artist: <a href='https://pixabay.com/photos/landscape-fantasy-city-
 tags:["MysticsArtDesign"]
 },
 
+///
 
+{url:"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png",
+description:"Artist: BernalesTomas",
+tags:["BackgroundCard", "BernalesTomas"]
+},
+
+{url:"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg",
+description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
+tags:["BackgroundCard", "BrunoScheele"]
+},
+
+{url:"https://res.cloudinary.com/metaverse/image/upload/v1559675816/card%20frames/magicitemcards_template_front_poker.jpg",
+description:"Artist: <a href='https://binaryadventures.com/blog/magic-item-cards/'>Bruno Scheele</a>",
+tags:["BackgroundCard", "BrunoScheele"]
+},
+
+{url:"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png",
+description:"Artist:....it's...it's just blank, there's no attribution needed here.  Why would you even WANT to use this?",
+tags:["Blank"]
+},
 
 
 
@@ -283,7 +304,7 @@ starterCard.text=[
     fontNum:12,
     fontColor:"#000000",
     fontAlign:"center"},
-  { content:"This is what the item does (is this text sliding off the card?  It should be at first!  But you can fix it by hitting enter to insert linebreaks.  click Load Card to refresh the image)",
+  { content:"This is what the item does (is this text sliding off the card?  It should be at first!  But you can fix it by hitting enter to insert linebreaks.  Clicking off of the textbox will cause the card to automatically update)",
     xPos:75,
     yPos:415,
     fontFam:"Arial",
@@ -293,6 +314,7 @@ starterCard.text=[
 
 ];
 starterCard.images=[
+  {"content":"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":44},
   {content:"https://res.cloudinary.com/metaverse/image/upload/v1556475584/Domigorgon/Armor/40.png",
   xPos:75,
   yPos:100,
@@ -300,20 +322,30 @@ starterCard.images=[
   height:225,
   catalogueNum:0},
 
+
 ];
+
+// let templateCatalogue=[
+//   {title:"Landscape Art", card:{"text":[{"content":"StormLord's Keep","xPos":"175","yPos":"65","fontFam":"Tempus Sans ITC","fontNum":"28","fontColor":"#000000","fontAlign":"center"},{"content":"A the symbol of the lost Vashunda Empire. \nWhile many reports of it have devolved \ninto mythology, those who would brave\na certain mountain dungeon may discover \nthe means to lift said mountain to the skies and \nadd a new chapter to the story of \nthe StormLord's Keep!","xPos":"25","yPos":"305","fontFam":"Century Schoolbook","fontNum":"14","fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":"15","yPos":"35","width":"350","height":"513","catalogueNum":null},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559672134/card%20frames/Unique_Item_-_Vorlage_-_Ein_Feld_Geld.png","xPos":"0","yPos":0,"width":"350","height":"516","catalogueNum":null}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
+//   {title:"Brief Description", card:{"text":[{"content":"Mori's Mantle","xPos":170,"yPos":40,"fontFam":"Tempus Sans ITC","fontNum":25,"fontColor":"#000000","fontAlign":"center"},{"content":"Armor","xPos":175,"yPos":400,"fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"center"},{"content":"This +3 breastplate will cast \nOverstimulate (DC 17) on either\nits wearer or those in combat against \nits wearer should either fall below\n 0 HP. ","xPos":75,"yPos":415,"fontFam":"Arial","fontNum":"13","fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1556475584/Domigorgon/Armor/40.png","xPos":75,"yPos":100,"width":200,"height":225,"catalogueNum":0}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png","backgroundID":0}},
+//   {title:"Long Description", card:{"text":[{"content":"Item Title","xPos":"175","yPos":"45","fontFam":"Haettenschweiler","fontNum":"39","fontColor":"#000000","fontAlign":"center"},{"content":"Item Type/Restrictions:","xPos":"25","yPos":"110","fontFam":"Impact","fontNum":"14","fontColor":"#000000","fontAlign":"left"},{"content":"Full Item Description:","xPos":"25","yPos":"190","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Book Reference and source info:","xPos":"25","yPos":"450","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Blah, blah blah.....","xPos":"50","yPos":"135","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Here's some info about the sword and...\nblah blah blah....are you listening?...\nthis is important because...blah...blah\n...blah......evil sentience....blah...blah\n...blah....awakened by blood....blah \nblah blah....","xPos":"50","yPos":"215","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Found in pg. 290 of Hyper Munchkin's Codex","xPos":"50","yPos":"470","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"}],"images":[],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
+//   {title:"All Flair~", card:{"text":[{"content":"Fancy Reminder~","xPos":"175","yPos":"465","fontFam":"Monotype Corsiva","fontNum":"35","fontColor":"#000000","fontAlign":"center"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":43},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673989/Textures/paper_texture_by_akinna_stock_dputcr.jpg","xPos":"50","yPos":"440","width":"255","height":"43","catalogueNum":40},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673630/card%20frames/tarot_card_templates_by_fararden_d21xspd.png","xPos":"0","yPos":"0","width":"350","height":"516","catalogueNum":42}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png","backgroundID":3}}
+//
+//
+// ];
 
 let templateCatalogue=[
-  {title:"Landscape Art", card:{"text":[{"content":"StormLord's Keep","xPos":"175","yPos":"65","fontFam":"Tempus Sans ITC","fontNum":"28","fontColor":"#000000","fontAlign":"center"},{"content":"A the symbol of the lost Vashunda Empire. \nWhile many reports of it have devolved \ninto mythology, those who would brave\na certain mountain dungeon may discover \nthe means to lift said mountain to the skies and \nadd a new chapter to the story of \nthe StormLord's Keep!","xPos":"25","yPos":"305","fontFam":"Century Schoolbook","fontNum":"14","fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":"15","yPos":"35","width":"350","height":"513","catalogueNum":null},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559672134/card%20frames/Unique_Item_-_Vorlage_-_Ein_Feld_Geld.png","xPos":"0","yPos":0,"width":"350","height":"516","catalogueNum":null}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
-  {title:"Brief Description", card:{"text":[{"content":"Mori's Mantle","xPos":170,"yPos":40,"fontFam":"Tempus Sans ITC","fontNum":25,"fontColor":"#000000","fontAlign":"center"},{"content":"Armor","xPos":175,"yPos":400,"fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"center"},{"content":"This +3 breastplate will cast \nOverstimulate (DC 17) on either\nits wearer or those in combat against \nits wearer should either fall below\n 0 HP. ","xPos":75,"yPos":415,"fontFam":"Arial","fontNum":"13","fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1556475584/Domigorgon/Armor/40.png","xPos":75,"yPos":100,"width":200,"height":225,"catalogueNum":0}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png","backgroundID":0}},
-  {title:"Long Description", card:{"text":[{"content":"Item Title","xPos":"175","yPos":"45","fontFam":"Haettenschweiler","fontNum":"39","fontColor":"#000000","fontAlign":"center"},{"content":"Item Type/Restrictions:","xPos":"25","yPos":"110","fontFam":"Impact","fontNum":"14","fontColor":"#000000","fontAlign":"left"},{"content":"Full Item Description:","xPos":"25","yPos":"190","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Book Reference and source info:","xPos":"25","yPos":"450","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Blah, blah blah.....","xPos":"50","yPos":"135","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Here's some info about the sword and...\nblah blah blah....are you listening?...\nthis is important because...blah...blah\n...blah......evil sentience....blah...blah\n...blah....awakened by blood....blah \nblah blah....","xPos":"50","yPos":"215","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Found in pg. 290 of Hyper Munchkin's Codex","xPos":"50","yPos":"470","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"}],"images":[],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
-  {title:"All Flair~", card:{"text":[{"content":"Fancy Reminder~","xPos":"175","yPos":"465","fontFam":"Monotype Corsiva","fontNum":"35","fontColor":"#000000","fontAlign":"center"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":43},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673989/Textures/paper_texture_by_akinna_stock_dputcr.jpg","xPos":"50","yPos":"440","width":"255","height":"43","catalogueNum":40},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673630/card%20frames/tarot_card_templates_by_fararden_d21xspd.png","xPos":"0","yPos":"0","width":"350","height":"516","catalogueNum":42}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png","backgroundID":3}}
+  {"title":"Brief Description","card":{"text":[{"content":"Item Title","xPos":170,"yPos":40,"fontFam":"Tempus Sans ITC","fontNum":25,"fontColor":"#000000","fontAlign":"center"},{"content":"Item Type","xPos":175,"yPos":400,"fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"center"},{"content":"This is what the item does (is this text sliding off the card?  It should be at first!  But you can fix it by hitting enter to insert linebreaks.  Give it a try, changes are saved once you click out of this textbox)","xPos":75,"yPos":415,"fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":44},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1556475584/Domigorgon/Armor/40.png","xPos":75,"yPos":100,"width":200,"height":225,"catalogueNum":0}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1554830129/DnD_Card_template.png","backgroundID":0}},
+  {"title":"Landscape Art","card":{"text":[{"content":"StormLord's Keep","xPos":"175","yPos":"65","fontFam":"Tempus Sans ITC","fontNum":"28","fontColor":"#000000","fontAlign":"center"},{"content":"A the symbol of the lost Vashunda Empire. \nWhile many reports of it have devolved \ninto mythology, those who would brave\na certain mountain dungeon may discover \nthe means to lift said mountain to the skies and \nadd a new chapter to the story of \nthe StormLord's Keep!","xPos":"25","yPos":"305","fontFam":"Century Schoolbook","fontNum":"14","fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":"15","yPos":"35","width":"350","height":"513","catalogueNum":null},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559672134/card%20frames/Unique_Item_-_Vorlage_-_Ein_Feld_Geld.png","xPos":"0","yPos":0,"width":"350","height":"516","catalogueNum":null}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
+  {"title":"Long Description","card":{"text":[{"content":"Item Title","xPos":"175","yPos":"45","fontFam":"Haettenschweiler","fontNum":"39","fontColor":"#000000","fontAlign":"center"},{"content":"Item Type/Restrictions:","xPos":"25","yPos":"110","fontFam":"Impact","fontNum":"14","fontColor":"#000000","fontAlign":"left"},{"content":"Full Item Description:","xPos":"25","yPos":"190","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Book Reference and source info:","xPos":"25","yPos":"450","fontFam":"Haettenschweiler","fontNum":"16","fontColor":"#000000","fontAlign":"left"},{"content":"Blah, blah blah.....","xPos":"50","yPos":"135","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Here's some info about the sword and...\nblah blah blah....are you listening?...\nthis is important because...blah...blah\n...blah......evil sentience....blah...blah\n...blah....awakened by blood....blah \nblah blah....","xPos":"50","yPos":"215","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"},{"content":"Found in pg. 290 of Hyper Munchkin's Codex","xPos":"50","yPos":"470","fontFam":"Arial","fontNum":12,"fontColor":"#000000","fontAlign":"left"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":45}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559675658/card%20frames/magicitemcards_template_blank_poker.jpg","backgroundID":1}},
+  {"title":"All Flair~","card":{"text":[{"content":"Fancy Reminder~","xPos":"175","yPos":"465","fontFam":"Monotype Corsiva","fontNum":"35","fontColor":"#000000","fontAlign":"center"}],"images":[{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559685187/landscape-2645003_1920.jpg","xPos":0,"yPos":0,"width":"350","height":"516","catalogueNum":43},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673989/Textures/paper_texture_by_akinna_stock_dputcr.jpg","xPos":"50","yPos":"440","width":"255","height":"43","catalogueNum":40},{"content":"https://res.cloudinary.com/metaverse/image/upload/v1559673630/card%20frames/tarot_card_templates_by_fararden_d21xspd.png","xPos":"0","yPos":"0","width":"350","height":"516","catalogueNum":42}],"background":"https://res.cloudinary.com/metaverse/image/upload/v1559688922/blank.png","backgroundID":3}}
 ];
 
 
 
- if (localStorage.getItem("backgroundCatalogue") === null) {
-   localStorage.setItem('backgroundCatalogue', JSON.stringify(backgroundCatalogue));
- }
+ // if (localStorage.getItem("backgroundCatalogue") === null) {
+ //   localStorage.setItem('backgroundCatalogue', JSON.stringify(backgroundCatalogue));
+ // }
 
  if (localStorage.getItem("imageCatalogue") === null) {
    localStorage.setItem('imageCatalogue', JSON.stringify(imageCatalogue));
